@@ -130,9 +130,15 @@ def validate(ticket):
             attributes = xml_from_dict["cas:attributes"]
 
             if "cas:memberOf" in attributes:
-                attributes["cas:memberOf"] = attributes["cas:memberOf"].lstrip('[').rstrip(']').split(',')
-                for group_number in range(0, len(attributes['cas:memberOf'])):
-                    attributes['cas:memberOf'][group_number] = attributes['cas:memberOf'][group_number].lstrip(' ').rstrip(' ')
+                if not isinstance(attributes["cas:memberOf"], list):
+                    attributes["cas:memberOf"] = attributes["cas:memberOf"].lstrip('[').rstrip(']').split(',')
+                    for group_number in range(0, len(attributes['cas:memberOf'])):
+                        attributes['cas:memberOf'][group_number] = attributes['cas:memberOf'][group_number].lstrip(' ').rstrip(' ')
+                else:
+                    for index in range(0, len(attributes['cas:memberOf'])):
+                        attributes["cas:memberOf"][index] = attributes["cas:memberOf"][index].lstrip('[').rstrip(']').split(',')
+                        for group_number in range(0, len(attributes['cas:memberOf'][index])):
+                            attributes['cas:memberOf'][index][group_number] = attributes['cas:memberOf'][index][group_number].lstrip(' ').rstrip(' ')
 
             flask.session[cas_attributes_session_key] = attributes
     else:
