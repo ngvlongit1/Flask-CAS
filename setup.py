@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 #Copyright (C) 2014, Cameron Brandon White
 # -*- coding: utf-8 -*-
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
             "Flask",
             "xmltodict",
         ],
-        test_requires = [
+        tests_require = [
             "Nose",
             "Mock",
         ],
