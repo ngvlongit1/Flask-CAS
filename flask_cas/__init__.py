@@ -95,7 +95,7 @@ def logout():
 def login_required(function):
     @wraps(function)
     def wrap(*args, **kwargs):
-        if 'CAS_USERNAME' not in flask.session:
+        if current_app.config['CAS_USERNAME_SESSION_KEY'] not in flask.session:
             flask.session['CAS_AFTER_LOGIN_SESSION_URL'] = (
                 flask.request.script_root +
                 flask.request.full_path
